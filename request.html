@@ -8,7 +8,7 @@
 	<script src="request.js"></script>
 	<script>
 		function onLoad() {
-			var response = new Request()
+			new Request()
 				.get('http://localhost/request.json')
 				.succeeded(onSucceeded)
 				.send()
@@ -18,6 +18,8 @@
 			console.log('status #:'+response.status.number)
 			console.log('status text:'+response.status.text)
 			console.log('body:'+response.body)
+			var json = JSON.parse(response.body)
+			console.log('title:'+json.title)
 		}
 	</script>
 </body>
