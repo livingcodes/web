@@ -1,3 +1,18 @@
-Next
+request.js
+==========
+Get data
+```
+new Request()
+  .get(url)
+  .succeeded(function(response) {
+    console.log(response.body)
+  })
+  .send()
+```
 
-* XMLHttpRequest.getAllResponseHeaders()
+Post data
+```
+new Request()
+  .post(url)
+  .send(data)
+```
