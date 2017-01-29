@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+	<title>request.js - http request</title>
+</head>
+<body onLoad="onLoad()">
+	<h1>request.js</h1>
+	<script src="request.js"></script>
+	<script>
+		function onLoad() {
+			var response = new Request()
+				.get('http://localhost/request.json')
+				.succeeded(onSucceeded)
+				.send()
+		}
+		function onSucceeded(response) {
+			console.log('custom response handler')
+			console.log('status #:'+response.status.number)
+			console.log('status text:'+response.status.text)
+			console.log('body:'+response.body)
+		}
+	</script>
+</body>
+</html>
