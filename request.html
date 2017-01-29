@@ -20,6 +20,8 @@
 			console.log('body:'+response.body)
 			var json = JSON.parse(response.body)
 			console.log('title:'+json.title)
+			console.log('header text:'+response.header.text)
+			console.log('content type:'+response.header['Content-Type'])
 		}
 	</script>
 </body>

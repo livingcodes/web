@@ -50,13 +50,14 @@ function Request()
     var ajax = function(method, url, json) {
         that.request.open(method, url, true)
         that.request.onreadystatechange = function () {
-			var response = new Response(that.request.status, that.request.response)
 			console.log('ready state:'+that.request.readyState + ', status:'+that.request.status)
-            if (that.request.readyState == 4)
+            if (that.request.readyState == 4) {
+				var response = new Response(that.request)
 				if (that.request.status != 200)
 					_onFailed(response)
 				else
 					_onSucceeded(response)
+			}
         }
     }
 	var _onFailed = function(response) {
@@ -67,7 +68,7 @@ function Request()
 	}
 }
 
-function Response(statusNumber, body)
+function Response(request)
 {
 	var STATUS = {
 		"200": "OK",
@@ -82,10 +83,20 @@ function Response(statusNumber, body)
 		"503": "Service Unavailable"
 	}
 	this.status = {
-		"number": statusNumber,
-		"text": STATUS[statusNumber.toString()]
+		"number": request.status,
+		"text": STATUS[request.status.toString()]
 	}
-	this.body = body
-	this.succeeded = statusNumber >= 200 && statusNumber < 300
+	this.body = request.response
+	this.succeeded = this.status.number >= 200 && this.status.number < 300
 	this.failed = !this.succeeded
+	this.header = {"text": request.getAllResponseHeaders()}
+	var headers = this.header.text.split('\r\n')
+	for (var i = 0; i < headers.length; i++) {
+		var colon = headers[i].indexOf(':')
+		var name = headers[i].substring(0, colon)
+		var value = headers[i].substring(colon+1, headers[i].length)
+		if (value[0] == ' ') // remove leading space
+			value = value.substring(1, value.length)
+		this.header[name] = value
+	}
 }
