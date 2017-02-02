@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+	<title>Form</title>
+</head>
+<body>
+	<h1>Form</h1>
+	<p>Submit form over ajax</p>
+	<input type="text" placeholder="Name" id="name" />
+	<input type="button" value="Register" onclick="onSubmit(this)" />
+	<script src="request.js"></script>
+	<script>
+		function onSubmit(button) {
+			button.value = "Processing..."
+
+			var requestData = {
+				"name":document.getElementById('name').value
+			}
+			var request = new Request()
+			request.get('request.json')
+				.succeeded(function(response) {
+					onSucceeded(button, request, response)
+				})
+				.send(requestData)
+		}
+		function onSucceeded(button, request, response) {
+			setTimeout(function(){
+				button.value = "Registered " + request.data.name
+				console.log("Title: " + response.json.title)
+			}, 1000)
+		}
+	</script>
+</body>
+</html>

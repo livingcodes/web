@@ -5,7 +5,7 @@ function Request()
 {	
 	var that = this
 	this.request = new XMLHttpRequest()
-    this._data = null
+    this.data = null
     this._contentType = null
 
     this.get = function(url) {
@@ -33,9 +33,9 @@ function Request()
     this.contentType = function(_contentType) {
         return this.header('Content-Type', _contentType)
     }
-    this.send = function(_data) {
-		if (_data)
-			this._data = data
+    this.send = function(data) {
+		if (data)
+			this.data = data
         this.request.send(this._data)
     }
 	this.succeeded = function(onSucceeded) {
@@ -87,6 +87,7 @@ function Response(request)
 		"text": STATUS[request.status.toString()]
 	}
 	this.body = request.response
+	this.json = JSON.parse(this.body)
 	this.succeeded = this.status.number >= 200 && this.status.number < 300
 	this.failed = !this.succeeded
 	this.header = {"text": request.getAllResponseHeaders()}
