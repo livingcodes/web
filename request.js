@@ -47,13 +47,20 @@ function Request()
 		return this
 	}
 
+	/* 
+	0	UNSENT				Client created. open() not called yet
+	1	OPENED				open() called
+	2	HEADERS_RECEIVED	send() called. Headers and status available.
+	3	LOADING				downloading. responseText holds partial data
+	4	DONE				operation complete
+	*/
     var ajax = function(method, url, json) {
         that.request.open(method, url, true)
         that.request.onreadystatechange = function () {
 			console.log('ready state:'+that.request.readyState + ', status:'+that.request.status)
             if (that.request.readyState == 4) {
 				var response = new Response(that.request)
-				if (that.request.status != 200)
+				if (that.request.status >= 300)
 					_onFailed(response)
 				else
 					_onSucceeded(response)
