@@ -29,7 +29,7 @@ function Request()
         this.request.setRequestHeader(name, value)
         return this
     }
-    // type of data being sent (ex. application/json)
+    // response data type (ex. application/json or text/html; charset=utf-8)
     this.contentType = function(_contentType) {
         return this.header('Content-Type', _contentType)
     }
