@@ -86,6 +86,7 @@ function Response(request)
         "403": "Forbidden",
         "404": "Not Found",
         "405": "Method Not Allowed",
+        "415": "Unsupported Media Type (review request header Content-Type)",
         "500": "Server Error",
         "503": "Service Unavailable"
     }
