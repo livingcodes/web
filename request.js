@@ -34,9 +34,9 @@ function Request()
         return this.header('Content-Type', _contentType)
     }
     this.send = function(data) {
-    if (data)
-        this.data = data
-        this.request.send(this._data)
+        if (data)
+            this.data = data
+        this.request.send(JSON.stringify(data))
     }
     this.succeeded = function(onSucceeded) {
         _onSucceeded = onSucceeded
@@ -62,7 +62,7 @@ function Request()
                 var response = new Response(that.request)
                 if (that.request.status >= 300)
                     _onFailed(response)
-        else
+                else
                     _onSucceeded(response)
             }
         }
